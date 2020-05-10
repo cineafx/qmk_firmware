@@ -47,9 +47,8 @@ enum custom_keycodes {
   OKAY,
   FDM,
   PP_H,
-  D_PP_H,
-  D_PP_HCOMF,
-  D_PP_HALL,
+  ICDANK,
+  ICTHINK,
   APPDATA,
   NICEMEME,
   ARMALOGI,
@@ -162,9 +161,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,--------+--------+--------+--------+--------+--------.                          ,--------+--------+--------+--------+--------+--------.
       _______, PYRA5  , PYRA10 , PYRA20 , _______, _______,                          X(NOCHAR), _______, _______, _______, _______, UC_M_WC,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, APPDATA,TRUELULW,                           D_PP_H,D_PP_HCOMF,D_PP_HALL,_______, _______, _______,
+      _______, _______, _______, _______, APPDATA, ICTHINK,                            _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-      _______, _______,PAJASHRU, _______, FDM    , _______,                           PP_H , _______, OKAY   ,ARMALOGI, _______, _______,
+      _______, _______,PAJASHRU, _______, FDM    , ICDANK ,                           PP_H    , _______, OKAY   ,ARMALOGI, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------.        ,--------|--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______, KC_ALGR,          _______,NICEMEME,ARMAMISS, _______, _______, _______, _______,
   //`--------+--------+--------+----+---+--------+--------+--------/        \--------+--------+--------+---+----+--------+--------+--------'
@@ -231,16 +230,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	CUSTOMMACRO(OKAY, 		SEND_STRING(" pupperK forsenK ");)
 	CUSTOMMACRO(FDM, 		  SEND_STRING(" FeelsDankMan ");)
 	CUSTOMMACRO(PP_H, 	  SEND_STRING(" pupperH ");)
-	CUSTOMMACRO(D_PP_H,   SEND_STRING("+:pupperH:" SS_TAP(X_ENTER));)
-	CUSTOMMACRO(D_PP_HCOMF, SEND_STRING("+:pupperH:" SS_TAP(X_ENTER)); \
-                          SEND_STRING("+:pupperHcomfz:" SS_TAP(X_ENTER));)
-  CUSTOMMACRO(D_PP_HALL,  SEND_STRING("+:pupperH:" SS_TAP(X_ENTER)); \
-                          SEND_STRING("+:pupperHcomfz:" SS_TAP(X_ENTER)); \
-                          SEND_STRING("+:pupperHtomato:" SS_TAP(X_ENTER)); \
-                          SEND_STRING("+:pupperHpride:" SS_TAP(X_ENTER)); \
-                          SEND_STRING("+:pupperHsanta:" SS_TAP(X_ENTER)); \
-                          SEND_STRING("+:pupperHsnowglobe:" SS_TAP(X_ENTER)); \
-                          SEND_STRING("+:pupperHornament:" SS_TAP(X_ENTER));)
+	CUSTOMMACRO(ICDANK,  SEND_STRING(" icdbDank ");)
+	CUSTOMMACRO(ICTHINK,  SEND_STRING(" icdbThink ");)
 	CUSTOMMACRO(APPDATA, 	register_code(KC_LGUI);
 							register_code(KC_R);
 							unregister_code(KC_R);
