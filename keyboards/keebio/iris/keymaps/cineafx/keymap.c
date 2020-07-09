@@ -42,7 +42,7 @@ enum custom_keycodes {
   ADJUST,
   MACRO,
   TRUELULW,
-  PAJASHRU,
+  SHRUG,
   HEAD,
   OKAY,
   FDM,
@@ -163,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, APPDATA, ICTHINK,                            _______, _______, _______, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-      _______, _______,PAJASHRU, _______, FDM    , ICDANK ,                           PP_H    , _______, OKAY   ,ARMALOGI, _______, _______,
+      _______, _______, SHRUG  , _______, FDM    , ICDANK ,                           PP_H    , _______, OKAY   ,ARMALOGI, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------.        ,--------|--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______, KC_ALGR,          _______,NICEMEME,ARMAMISS, _______, _______, _______, _______,
   //`--------+--------+--------+----+---+--------+--------+--------/        \--------+--------+--------+---+----+--------+--------+--------'
@@ -225,12 +225,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                         SEND_STRING("+:regional_indicator_e:" SS_TAP(X_ENTER)); \
                         SEND_STRING("+:LULW" SS_TAP(X_ENTER)); \
               )
-	CUSTOMMACRO(PAJASHRU,	SEND_STRING(" pajaShrugL pajaW pajaShrugR ");)
+	CUSTOMMACRO(SHRUG,	  SEND_STRING(" icdbShrug ");)
 	CUSTOMMACRO(HEAD, 		SEND_STRING(" forsenHead ");)
 	CUSTOMMACRO(OKAY, 		SEND_STRING(" pupperK forsenK ");)
 	CUSTOMMACRO(FDM, 		  SEND_STRING(" FeelsDankMan ");)
 	CUSTOMMACRO(PP_H, 	  SEND_STRING(" pupperH ");)
-	CUSTOMMACRO(ICDANK,  SEND_STRING(" icdbDank ");)
+	CUSTOMMACRO(ICDANK,   SEND_STRING(" icdbDank ");)
 	CUSTOMMACRO(ICTHINK,  SEND_STRING(" icdbThink ");)
 	CUSTOMMACRO(APPDATA, 	register_code(KC_LGUI);
 							register_code(KC_R);
@@ -242,9 +242,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 	CUSTOMMACRO(NICEMEME,	send_unicode_hex_string("006E 036B 0069 0364 0063 036B 0065 0364");)
 	CUSTOMMACRO(ARMALOGI, SEND_STRING("-#login"SS_TAP(X_ENTER));)
 	CUSTOMMACRO(ARMAMISS, SEND_STRING("-#missions"SS_TAP(X_ENTER));)
-	CUSTOMMACRO(PYRA5, PYRAMID(5))
-	CUSTOMMACRO(PYRA10, PYRAMID(10))
-	CUSTOMMACRO(PYRA20, PYRAMID(20))
+	CUSTOMMACRO(PYRA5,    PYRAMID(5))
+	CUSTOMMACRO(PYRA10,   PYRAMID(10))
+	CUSTOMMACRO(PYRA20,   PYRAMID(20))
   }
   return true;
 }
