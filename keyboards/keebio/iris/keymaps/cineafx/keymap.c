@@ -6,11 +6,15 @@
 
 extern keymap_config_t keymap_config;
 
+// Most of this is based on https://gist.github.com/itspngu/9159f06153b440a754b33c6d65c5f302
+#define MODS_SHIFT_MASK  (MOD_BIT(KC_LSHIFT)|MOD_BIT(KC_RSHIFT))
+
 #define _QWERTY 0
 #define _LOWER 1
 #define _RAISE 2
-#define _ADJUST 3
-#define _MACRO 4
+#define _MOD_L 3
+#define _MOD_U 4
+#define _MACRO 5
 
 #define CUSTOMMACRO(MACROKEYCODE, DOWN) case MACROKEYCODE : \
       if (record->event.pressed) { \
@@ -83,20 +87,84 @@ enum unicode_names {
   PPIPE,
   TTILD,
   BBSL,
-  NOCHAR
+  NOCHAR,
+
+  M_L_A, M_L_B, M_L_C, M_L_D, M_L_E, M_L_F, M_L_G, M_L_H,
+  M_L_I, M_L_J, M_L_K, M_L_L, M_L_M, M_L_N, M_L_O, M_L_P, /*M_L_Q,*/
+  M_L_R, M_L_S, M_L_T, M_L_U, M_L_V, M_L_W, M_L_X, M_L_Y, M_L_Z,
+
+  M_U_A, M_U_B, /*M_U_C,*/ M_U_D, M_U_E, /*M_U_F,*/ M_U_G, M_U_H,
+  M_U_I, M_U_J, M_U_K, M_U_L, M_U_M, M_U_N, M_U_O, M_U_P, /*M_U_Q,*/
+  M_U_R, /*M_U_S,*/ M_U_T, M_U_U, M_U_V, M_U_W, /*M_U_X,*/ /*M_U_Y,*/ /*M_U_Z,*/
 };
 
 const uint32_t PROGMEM unicode_map[] = {
-  [LAB]   = 0x3008,  // 〈
-  [RAB]   = 0x3009,  // 〉
-  [SQUBL] = 0x005B,  // [
-  [SQUBR] = 0x005D,  // ]
-  [CURBL] = 0x007B,  // {
-  [CURBR] = 0x007D,  // }
-  [PPIPE] = 0x007C,  // |
-  [TTILD] = 0x007E,  // ~
-  [BBSL] = 0x005C,   // backslash
-  [NOCHAR] = 0xE0000 // <not a character>
+  [LAB]    = 0x3008,  // 〈
+  [RAB]    = 0x3009,  // 〉
+  [SQUBL]  = 0x005B,  // [
+  [SQUBR]  = 0x005D,  // ]
+  [CURBL]  = 0x007B,  // {
+  [CURBR]  = 0x007D,  // }
+  [PPIPE]  = 0x007C,  // |
+  [TTILD]  = 0x007E,  // ~
+  [BBSL]   = 0x005C,  // backslash
+  [NOCHAR] = 0xE0000, // <not a character>
+
+  /* LOWER CASE */
+  [M_L_A]  = 0x1D43,  // ᵃ
+  [M_L_B]  = 0x1D47,  // ᵇ
+  [M_L_C]  = 0x1D9C,  // ᶜ
+  [M_L_D]  = 0x1D48,  // ᵈ
+  [M_L_E]  = 0x1D49,  // ᵉ
+  [M_L_F]  = 0x1DA0,  // ᶠ
+  [M_L_G]  = 0x1D4D,  // ᵍ
+  [M_L_H]  = 0x02B0,  // ʰ
+  [M_L_I]  = 0x1DA4,  // ᶤ FAKE ONE. Doesn't exist
+  [M_L_J]  = 0x02B2,  // ʲ
+  [M_L_K]  = 0x1D4F,  // ᵏ
+  [M_L_L]  = 0x02E1,  // ˡ
+  [M_L_M]  = 0x1D50,  // ᵐ
+  [M_L_N]  = 0x1dAF,  // ᶯ FAKE ONE. Doesn't exist
+  [M_L_O]  = 0x1D52,  // ᵒ
+  [M_L_P]  = 0x1D56,  // ᵖ
+  //[M_L_Q]  = 0x0000,  // Doesn't exist
+  [M_L_R]  = 0x02B3,  // ʳ
+  [M_L_S]  = 0x02E2,  // ˢ
+  [M_L_T]  = 0x1D57,  // ᵗ
+  [M_L_U]  = 0x1D58,  // ᵘ
+  [M_L_V]  = 0x1D5B,  // ᵛ
+  [M_L_W]  = 0x02B7,  // ʷ
+  [M_L_X]  = 0x02E3,  // ˣ
+  [M_L_Y]  = 0x02B8,  // ʸ
+  [M_L_Z]  = 0x1DBB,  // ᶻ
+
+  /* UPPER CASE */
+  [M_U_A]  = 0x1D2C,  // ᴬ
+  [M_U_B]  = 0x1D2E,  // ᴮ
+  //[M_U_C]  = 0x0000,  // Doesn't exist
+  [M_U_D]  = 0x1D30,  // ᴰ
+  [M_U_E]  = 0x1D31,  // ᴱ
+  //[M_U_F]  = 0x0000,  // Doesn't exist
+  [M_U_G]  = 0x1D33,  // ᴳ
+  [M_U_H]  = 0x1D34,  // ᴴ
+  [M_U_I]  = 0x1D35,  // ᴵ
+  [M_U_J]  = 0x1D36,  // ᴶ
+  [M_U_K]  = 0x1D37,  // ᴷ
+  [M_U_L]  = 0x1D38,  // ᴸ
+  [M_U_M]  = 0x1D39,  // ᴹ
+  [M_U_N]  = 0x1D3A,  // ᴺ
+  [M_U_O]  = 0x1D3C,  // ᴼ
+  [M_U_P]  = 0x1D3E,  // ᴾ
+  //[M_U_Q]  = 0x0000,  // Doesn't exist
+  [M_U_R]  = 0x1D3F,  // ᴿ
+  //[M_U_S]  = 0x0000,  // Doesn't exist
+  [M_U_T]  = 0x1D40,  // ᵀ
+  [M_U_U]  = 0x1D41,  // ᵁ
+  [M_U_V]  = 0x2C7D,  // ⱽ
+  [M_U_W]  = 0x1D42,  // ᵂ
+  //[M_U_X]  = 0x0000,  // Doesn't exist
+  //[M_U_Y]  = 0x0000,  // Doesn't exist
+  //[M_U_Z]  = 0x0000,  // Doesn't exist
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -143,17 +211,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                              `~--------+--------+--------'            `--------+--------+--------'
   ),
 
-  [_ADJUST] = LAYOUT(
+  [_MOD_L] = LAYOUT(
   //,--------+--------+--------+--------+--------+--------.                          ,--------+--------+--------+--------+--------+--------.
-      MI_C_3 , MI_Cs_3, MI_D_3 , MI_Ds_3, MI_E_3 , MI_F_3 ,                            MI_Fs_3, MI_G_3 , MI_Gs_3, MI_A_3 , MI_As_3, MI_B_3 ,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-      MI_C_2 , MI_Cs_2, MI_D_2 , MI_Ds_2, MI_E_2 , MI_F_2 ,                            MI_Fs_2, MI_G_2 , MI_Gs_2, MI_A_2 , MI_As_2, MI_B_2 ,
+      XXXXXXX, XXXXXXX,X(M_L_W),X(M_L_E),X(M_L_R),X(M_L_T),                           X(M_L_Z),X(M_L_U),X(M_L_I),X(M_L_O),X(M_L_P), XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
-      MI_C_1 , MI_Cs_1, MI_D_1 , MI_Ds_1, MI_E_1 , MI_F_1 ,                            MI_Fs_1, MI_G_1 , MI_Gs_1, MI_A_1 , MI_As_1, MI_B_1 ,
+      XXXXXXX,X(M_L_A),X(M_L_S),X(M_L_D),X(M_L_F),X(M_L_G),                           X(M_L_H),X(M_L_J),X(M_L_K),X(M_L_L), XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------.        ,--------|--------+--------+--------+--------+--------+--------|
-      MI_C   , MI_Cs  , MI_D   , MI_Ds  , MI_E   , MI_F   , MI_OCTD,          MI_OCTU, MI_Fs  , MI_G   , MI_Gs  , MI_A   , MI_As  , MI_B   ,
+      _______,X(M_L_Y),X(M_L_X),X(M_L_C),X(M_L_V),X(M_L_B), _______,          _______,X(M_L_N),X(M_L_M), XXXXXXX, XXXXXXX, XXXXXXX, _______,
   //`--------+--------+--------+----+---+--------+--------+--------/        \--------+--------+--------+---+----+--------+--------+--------'
-                                      _______, _______,_______,               _______, _______, _______
+                                      _______, _______, _______,               _______, _______, _______
+  //                                `--------+--------+--------'                `--------+--------+--------'
+  ),
+
+  [_MOD_U] = LAYOUT(
+  //,--------+--------+--------+--------+--------+--------.                          ,--------+--------+--------+--------+--------+--------.
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX,X(M_U_W),X(M_U_E),X(M_U_R),X(M_U_T),                            XXXXXXX,X(M_U_U),X(M_U_I),X(M_U_O),X(M_U_P), XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                          |--------+--------+--------+--------+--------+--------|
+      XXXXXXX,X(M_U_A), XXXXXXX,X(M_U_D), XXXXXXX,X(M_U_G),                           X(M_U_H),X(M_U_J),X(M_U_K),X(M_U_L), XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------+--------.        ,--------|--------+--------+--------+--------+--------+--------|
+      _______, XXXXXXX, XXXXXXX, XXXXXXX,X(M_U_V),X(M_U_B), _______,          _______,X(M_U_N),X(M_U_M), XXXXXXX, XXXXXXX, XXXXXXX, _______,
+  //`--------+--------+--------+----+---+--------+--------+--------/        \--------+--------+--------+---+----+--------+--------+--------'
+                                      _______, _______, _______,               _______, _______, _______
   //                                `--------+--------+--------'                `--------+--------+--------'
   ),
 
@@ -174,6 +256,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  static uint8_t shift_mask;
+  shift_mask = get_mods() & MODS_SHIFT_MASK;
+
   switch (keycode) {
    // case QWERTY:
    //   if (record->event.pressed) {
@@ -184,30 +269,46 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case LOWER:
       if (record->event.pressed) {
         layer_on(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        if (shift_mask){
+          update_tri_layer(_LOWER, _RAISE, _MOD_U);
+        } else {
+          update_tri_layer(_LOWER, _RAISE, _MOD_L);
+        }
       } else {
         layer_off(_LOWER);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        update_tri_layer(_LOWER, _RAISE, _MOD_U);
+        update_tri_layer(_LOWER, _RAISE, _MOD_L);
       }
       return false;
       break;
     case RAISE:
       if (record->event.pressed) {
         layer_on(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        if (shift_mask){
+          update_tri_layer(_LOWER, _RAISE, _MOD_U);
+        } else {
+          update_tri_layer(_LOWER, _RAISE, _MOD_L);
+        }
       } else {
         layer_off(_RAISE);
-        update_tri_layer(_LOWER, _RAISE, _ADJUST);
+        update_tri_layer(_LOWER, _RAISE, _MOD_U);
+        update_tri_layer(_LOWER, _RAISE, _MOD_L);
       }
       return false;
       break;
-    case ADJUST:
+    case KC_LSFT:
+    case KC_RSFT:
       if (record->event.pressed) {
-        layer_on(_ADJUST);
+        if (IS_LAYER_ON(_MOD_L)){
+          layer_on(_MOD_U);
+        }
       } else {
-        layer_off(_ADJUST);
+        if (IS_LAYER_ON(_MOD_U)){
+          layer_on(_MOD_L);
+          layer_off(_MOD_U);
+        }
       }
-      return false;
+      return true;
       break;
     case MACRO:
       if (record->event.pressed) {
