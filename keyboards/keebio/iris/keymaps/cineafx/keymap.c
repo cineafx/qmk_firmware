@@ -328,7 +328,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
               )
 	CUSTOMMACRO(SHRUG,	  SEND_STRING(" icdbShrug ");)
 	CUSTOMMACRO(HEAD, 		SEND_STRING(" forsenHead ");)
-	CUSTOMMACRO(OKAY, 		SEND_STRING(" pupperK forsenK ");)
+	CUSTOMMACRO(OKAY, 		SEND_STRING(" pupperK pajaM ");)
 	CUSTOMMACRO(FDM, 		  SEND_STRING(" FeelsDankMan ");)
 	CUSTOMMACRO(PP_H, 	  SEND_STRING(" pupperH ");)
 	CUSTOMMACRO(ICDANK,   SEND_STRING(" icdbDank ");)
