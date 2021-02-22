@@ -321,26 +321,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 	//MACROS
 	CUSTOMMACRO(TRUELULW, SEND_STRING("+:regional_indicator_t:" SS_TAP(X_ENTER)); \
-                        SEND_STRING("+:regional_indicator_r:" SS_TAP(X_ENTER)); \
-                        SEND_STRING("+:regional_indicator_u:" SS_TAP(X_ENTER)); \
-                        SEND_STRING("+:regional_indicator_e:" SS_TAP(X_ENTER)); \
-                        SEND_STRING("+:LULW" SS_TAP(X_ENTER)); \
-              )
+                          SEND_STRING("+:regional_indicator_r:" SS_TAP(X_ENTER)); \
+                          SEND_STRING("+:regional_indicator_u:" SS_TAP(X_ENTER)); \
+                          SEND_STRING("+:regional_indicator_e:" SS_TAP(X_ENTER)); \
+                          SEND_STRING("+:LULW" SS_TAP(X_ENTER)); \
+               )
 	CUSTOMMACRO(SHRUG,	  SEND_STRING(" icdbShrug ");)
-	CUSTOMMACRO(HEAD, 		SEND_STRING(" forsenHead ");)
-	CUSTOMMACRO(OKAY, 		SEND_STRING(" pupperK pajaM ");)
-	CUSTOMMACRO(FDM, 		  SEND_STRING(" FeelsDankMan ");)
+	CUSTOMMACRO(HEAD,     SEND_STRING(" forsenHead ");)
+	CUSTOMMACRO(OKAY,     SEND_STRING(" pajaM "); \
+                           send_unicode_hex_string("1F44C");)
+	CUSTOMMACRO(FDM,	  SEND_STRING(" FeelsDankMan ");)
 	CUSTOMMACRO(PP_H, 	  SEND_STRING(" pupperH ");)
 	CUSTOMMACRO(ICDANK,   SEND_STRING(" icdbDank ");)
 	CUSTOMMACRO(ICTHINK,  SEND_STRING(" icdbThink ");)
-	CUSTOMMACRO(APPDATA, 	register_code(KC_LGUI);
+	CUSTOMMACRO(APPDATA,  register_code(KC_LGUI);
 							register_code(KC_R);
 							unregister_code(KC_R);
 							unregister_code(KC_LGUI);
 							_delay_ms(100);
 							SEND_STRING("%appdata%"SS_TAP(X_ENTER));
 		)
-	CUSTOMMACRO(NICEMEME,	send_unicode_hex_string("006E 036B 0069 0364 0063 036B 0065 0364");)
+	CUSTOMMACRO(NICEMEME, send_unicode_hex_string("006E 036B 0069 0364 0063 036B 0065 0364");)
 	CUSTOMMACRO(ARMALOGI, SEND_STRING("-#login"SS_TAP(X_ENTER));)
 	CUSTOMMACRO(ARMAMISS, SEND_STRING("-#missions"SS_TAP(X_ENTER));)
 	CUSTOMMACRO(PYRA5,    PYRAMID(5))
