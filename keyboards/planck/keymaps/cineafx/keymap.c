@@ -16,6 +16,8 @@
 
 #include QMK_KEYBOARD_H
 #include "muse.h"
+//#include "process_unicode_common.h"
+#include <sendstring_german.h>
 
 
 enum planck_layers {
