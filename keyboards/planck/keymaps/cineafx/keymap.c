@@ -34,7 +34,22 @@ enum planck_keycodes {
   QWERTY = SAFE_RANGE,
   PLOVER,
   BACKLIT,
-  EXT_PLV
+  EXT_PLV,
+  TRUELULW,
+  SHRUG,
+  HEAD,
+  OKAY,
+  FDM,
+  PP_H,
+  ICDANK,
+  ICTHINK,
+  APPDATA,
+  NICEMEME,
+  ARMALOGI,
+  ARMAMISS,
+  PYRA5,
+  PYRA10,
+  PYRA20,
 };
 
 enum unicode_names {
@@ -62,6 +77,31 @@ const uint32_t PROGMEM unicode_map[] = {
   [BBSL]   = 0x005C,  // backslash
   [NOCHAR] = 0xE0000, // <not a character>
 };
+
+#define CUSTOMMACRO(MACROKEYCODE, DOWN) case MACROKEYCODE : \
+      if (record->event.pressed) { \
+        DOWN \
+      } \
+      break;
+#define PYRAMID_DELAY 50
+#define PYRAMID(AMOUNT) \
+int i; \
+register_code(KC_LCTRL); \
+for(i = 0; i< AMOUNT ; i++) { \
+	tap_code(KC_V); \
+	wait_ms(PYRAMID_DELAY); \
+	tap_code(KC_ENTER); \
+	wait_ms(PYRAMID_DELAY); \
+} \
+for(i = 0; i< AMOUNT ; i++) { \
+	tap_code(KC_BSPACE); \
+	wait_ms(PYRAMID_DELAY); \
+	tap_code(KC_ENTER); \
+	wait_ms(PYRAMID_DELAY); \
+} \
+unregister_code(KC_LCTRL);
+
+
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
@@ -190,9 +230,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_MOD] = LAYOUT_planck_grid(
-    _______, _______, _______, _______, _______, _______, X(NOCHAR), _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
-    _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
+    _______, PYRA5  , PYRA10 , PYRA20 , APPDATA, ICTHINK, X(NOCHAR), _______, _______, _______, _______, _______,
+    _______, _______, SHRUG  , _______, FDM    , ICDANK ,   _______, _______, OKAY   , _______, _______, _______,
+    _______, _______, _______, _______, _______, _______,  NICEMEME, _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______
 ),
 
@@ -275,6 +315,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+
+
+      //MACROS
+      CUSTOMMACRO(TRUELULW, SEND_STRING("+:regional_indicator_t:" SS_TAP(X_ENTER)); \
+                          SEND_STRING("+:regional_indicator_r:" SS_TAP(X_ENTER)); \
+                          SEND_STRING("+:regional_indicator_u:" SS_TAP(X_ENTER)); \
+                          SEND_STRING("+:regional_indicator_e:" SS_TAP(X_ENTER)); \
+                          SEND_STRING("+:LULW" SS_TAP(X_ENTER)); \
+               )
+      CUSTOMMACRO(SHRUG,	  SEND_STRING(" icdbShrug ");)
+      CUSTOMMACRO(HEAD,     SEND_STRING(" forsenHead ");)
+      CUSTOMMACRO(OKAY,     SEND_STRING(" pajaM "); \
+                           send_unicode_hex_string("1F44C");)
+      CUSTOMMACRO(FDM,	  SEND_STRING(" FeelsDankMan ");)
+      CUSTOMMACRO(PP_H, 	  SEND_STRING(" pupperH ");)
+      CUSTOMMACRO(ICDANK,   SEND_STRING(" icdbDank ");)
+      CUSTOMMACRO(ICTHINK,  SEND_STRING(" icdbThink ");)
+      CUSTOMMACRO(APPDATA,  register_code(KC_LGUI);
+          register_code(KC_R);
+          unregister_code(KC_R);
+          unregister_code(KC_LGUI);
+          wait_ms(100);
+          SEND_STRING("%appdata%"SS_TAP(X_ENTER));
+      )
+      CUSTOMMACRO(NICEMEME, send_unicode_hex_string("006E 036B 0069 0364 0063 036B 0065 0364");)
+      CUSTOMMACRO(ARMALOGI, SEND_STRING("-#login"SS_TAP(X_ENTER));)
+      CUSTOMMACRO(ARMAMISS, SEND_STRING("-#missions"SS_TAP(X_ENTER));)
+      CUSTOMMACRO(PYRA5,    PYRAMID(5))
+      CUSTOMMACRO(PYRA10,   PYRAMID(10))
+      CUSTOMMACRO(PYRA20,   PYRAMID(20))
+
+
+
   }
   return true;
 }
