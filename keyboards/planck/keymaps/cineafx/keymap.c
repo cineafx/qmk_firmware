@@ -22,6 +22,7 @@
 
 enum planck_layers {
   _QWERTY,
+  _GAME,
   _LOWER,
   _RAISE,
   _PLOVER,
@@ -32,6 +33,7 @@ enum planck_layers {
 
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
+  GAME,
   PLOVER,
   BACKLIT,
   EXT_PLV,
@@ -134,6 +136,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    CTRL_ESC, KC_A   , KC_S   , KC_D   , KC_F   , KC_G   ,   KC_H   , KC_J   , KC_K   , KC_L   , KC_SCLN, KC_QUOT,
     KC_LSFT, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   ,   KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,
     MOD    , KC_GESC, KC_LGUI, KC_LALT, LOWER  , KC_SPC ,   KC_ENT , RAISE  , KC_BSPC, KC_ALGR, _______, SYSTEM
+),
+
+/*
+ * "Gaming" mode where it doesn't use Mod-Tap. It's always a ctrl key.
+ * (Second key on the bottom row is still KC_GESC from the _QUERTY layer.)
+ */
+[_GAME] = LAYOUT_planck_grid(
+    _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
+    KC_LCTL, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______,   _______, _______, _______, _______, _______, SYSTEM
 ),
 
 /* Lower
@@ -250,7 +263,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_SYSTEM] = LAYOUT_planck_grid(
     _______, RESET  , DEBUG  , RGB_TOG, RGB_MOD, RGB_HUI,   RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, _______,
-    _______, _______, MU_MOD , AU_ON  , AU_OFF , _______,   _______, QWERTY , _______, _______,  PLOVER, _______,
+    _______, _______, MU_MOD , AU_ON  , AU_OFF , _______,   _______, QWERTY , GAME   , _______,  PLOVER, _______,
     _______, MUV_DE , MUV_IN , MU_ON  , MU_OFF , MI_ON  ,   MI_OFF , TERM_ON,TERM_OFF, _______, _______, _______,
     _______, _______, _______, _______, _______, _______,   _______, _______, KC_MPRV, KC_MNXT, KC_MPLY, _______
 )
@@ -275,6 +288,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case GAME:
+        if (record->event.pressed) {
+            set_single_persistent_default_layer(_GAME);
+        }
+        return false;
+        break;
     case BACKLIT:
       if (record->event.pressed) {
         register_code(KC_RSFT);
